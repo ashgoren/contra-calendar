@@ -1,8 +1,8 @@
+import { google } from 'googleapis';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 import { cwd } from 'process';
 import { authenticate } from '@google-cloud/local-auth';
-import { google } from 'googleapis';
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/calendar.events'];
@@ -37,7 +37,7 @@ async function saveCredentials(client) {
 }
 
 // Load or request or authorization to call APIs
-export async function authorize() {
+async function authorize() {
   let client = await loadSavedCredentialsIfExist();
   if (client) {
     return client;
@@ -51,4 +51,9 @@ export async function authorize() {
   }
   console.log(client);
   return client;
+}
+
+export async function setupGoogleCalendarApi() {
+  const auth = await authorize();
+  return google.calendar({version: 'v3', auth});
 }

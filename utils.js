@@ -1,4 +1,20 @@
+import { JSDOM } from 'jsdom';
 import inquirer from 'inquirer';
+
+export function extractTextBetween({ html, startText, endText }) {
+  const dom = new JSDOM(html);
+  const document = dom.window.document;
+  const bodyText = document.body.textContent;
+
+  const startIndex = bodyText.indexOf(startText) + startText.length;
+  const endIndex = bodyText.indexOf(endText);
+
+  if (startIndex >= startText.length && endIndex > startIndex) {
+    return bodyText.slice(startIndex, endIndex).trim();
+  } else {
+    throw new Error('Could not find the specified start and end text.');
+  }
+};
 
 export async function confirmAction(message) {
   const { confirmation } = await inquirer.prompt([
@@ -14,9 +30,9 @@ export async function confirmAction(message) {
 
 export function logEvents({ events, name }) {
   console.log('');
-  console.log('****************************************************************************************************');
+  console.log('****************************');
   console.log(name.toUpperCase());
-  console.log('****************************************************************************************************');
+  console.log('****************************');
   console.log('');
   for (const {start, end, summary, location, description} of events) {
     logDateTimes(start.dateTime, end.dateTime)
