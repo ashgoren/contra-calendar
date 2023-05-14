@@ -1,17 +1,16 @@
 import axios from 'axios';
-import { parse, isBefore, isAfter, subDays, addMonths, addYears, add } from 'date-fns';
 import { JSDOM } from 'jsdom';
+import xml2js from 'xml2js';
+import { parse, isBefore, isAfter, subDays, addMonths, addYears } from 'date-fns';
 import { setupGoogleCalendarApi } from './google-auth.js';
 import { addEventsToGoogleCalendar } from './google-calendar.js';
 import { extractTextBetween, confirmAction, logEvents } from './utils.js';
-import globalConfig from './config.js';
+import { LOCATIONS, MONTHS_TO_SCRAPE } from './config.js';
 const today = new Date();
-
-const MONTHS_TO_SCRAPE = 6;
 
 try {
   const calendarApi = await setupGoogleCalendarApi();
-  for (const config of Object.values(globalConfig)) {
+  for (const config of Object.values(LOCATIONS)) {
     await handleLocation({ calendarApi, config });
   }
 } catch (err) {
@@ -21,7 +20,17 @@ try {
 async function handleLocation({ calendarApi, config }) {
   // scrape events
   console.log(`\n\nScraping ${config.name}...`)
-  const scrapedEvents = config.name === 'Portland' ? await scrapePortland() : await scrape(config);
+  let scrapedEvents;
+  switch (config.name) {
+    case 'Portland':
+      scrapedEvents = await scrapePortland();
+      break;
+    case 'Corvallis':
+      scrapedEvents = await scrapeCorvallis(config);
+      break;
+    default:
+      scrapedEvents = await scrape(config);
+  }
 
   // build google-compatible events
   const builtEvents = await buildEvents({ events: scrapedEvents, config });
@@ -136,6 +145,31 @@ async function scrapePortland() {
 }
 
 
+// **************************************
+// ********** Scrape Corvallis **********
+// **************************************
+async function scrapeCorvallis(config) {
+  const response = await axios.get(config.url);
+  const result = await xml2js.parseStringPromise(response.data, {explicitArray: false, ignoreAttrs: true, tagNameProcessors: [xml2js.processors.stripPrefix]});
+  const events = result.icalendar.vcalendar.components.vevent.map(event => event.properties);
+  const futureEvents = events.filter((event) => {
+    const date = new Date(event.dtstart['date-time']);
+    return isAfter(date, subDays(today, 2)) && isBefore(date, addMonths(today, MONTHS_TO_SCRAPE));
+  });
+  const mappedEvents = futureEvents.map((event) => {
+    return {
+      summary: event.summary.text,
+      startDateTime: new Date(event.dtstart['date-time']).toISOString(),
+      endDateTime: new Date(event.dtend['date-time']).toISOString(),
+      location: event.location.text,
+      description: event.description.text,
+      url: event.url.uri
+    }
+  });
+  return mappedEvents;
+}
+
+
 // **************************************************
 // ********** Build Google Calendar Events **********
 // **************************************************
@@ -147,7 +181,7 @@ async function buildEvents({ events, config }) {
     let event = {
       'summary': summaryWithName,
       'location': location || config.address,
-      'description': config.name === 'Portland' ? `${description}\n\n${url}` : config.url,
+      'description': description ? `${description}\n\n${url}` : config.url,
       'guestsCanSeeOtherGuests': false,
       'transparency': 'transparent',
       'start': {

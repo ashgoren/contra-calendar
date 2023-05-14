@@ -1,4 +1,6 @@
-export default {
+export const MONTHS_TO_SCRAPE = 6;
+
+export const LOCATIONS = {
   "lake_city": {
     "name": "Lake City",
     "short_name": "SEA",
@@ -34,6 +36,12 @@ export default {
     "start_text": "Upcoming Dances",
     "end_text": "Covid protocols",
     "regex": /(\w+\s+\d+(?:st|nd|rd|th),\s+\d{4}):(.*)/g
+  },
+  "corvallis": {
+    "name": "Corvallis",
+    "short_name": "COR",
+    "url": "http://corvallisfolklore.org/home/?plugin=all-in-one-event-calendar&controller=ai1ec_exporter_controller&action=export_events&ai1ec_cat_ids=8&xml=true",
+    "calendar_id": "c_d97061699c63fc077cb7c3588fc89e7362363112a9017cb7be0192f6236170e9@group.calendar.google.com"
   },
   "portland": {
     "name": "Portland",

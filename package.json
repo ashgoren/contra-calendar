@@ -16,7 +16,8 @@
     "dotenv": "^16.0.3",
     "googleapis": "^105.0.0",
     "inquirer": "^9.2.2",
-    "jsdom": "^22.0.0"
+    "jsdom": "^22.0.0",
+    "xml2js": "^0.5.0"
   },
   "type": "module"
 }

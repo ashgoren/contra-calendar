@@ -1,6 +1,6 @@
 ## Contra Calendar Generator
 
-Node script to scrape the schedules for Seattle, Oly and PDX contra dances and add / update the events in Google calendars.
+Node script to scrape schedules for PNW contra dances and add / update events in Google calendars.
 
 ### Usage
 
@@ -16,6 +16,4 @@ npm start
 - [Seattle - Phinney (Emerald City)](https://contra.dance/calendar-phinney)
 - [Olympia](https://contra.dance/calendar-olympia)
 - [Portland](https://contra.dance/calendar-portland)
-
-### Other Google calendars
-- [Corvallis](https://contra.dance/calendar-corvallis) (not generated with this script, but including it here for ease of finding it)
+- [Corvallis](https://contra.dance/calendar-corvallis)
