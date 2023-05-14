@@ -1,15 +1,12 @@
 import { subDays } from 'date-fns';
 const today = new Date();
 
-export async function addEventsToGoogleCalendar({ builtEvents, calendarApi, calendarId }) {
+export async function addEventsToGoogleCalendar({ googleEvents, calendarApi, calendarId }) {
   const existingEvents = await fetchExistingGoogleEvents({ calendarApi, calendarId });
-  if (existingEvents.length > 0) { // google connection is working
-    for (const event of builtEvents) {
-      await new Promise(done => setTimeout(() => done(), 1000)); // rate limiting
-      addGoogleEvent({ calendarApi, calendarId, existingEvents, event });
-    }
-  } else {
-    throw new Error('No existing events found. Is this the right calendar?');
+  if (!existingEvents.length) throw new Error(`No existing events found in ${calendarId}. Did something go wrong?`);
+  for (const event of googleEvents) {
+    await new Promise(resolve => setTimeout(resolve, 1000)); // rate limiting
+    await addOrUpdateGoogleEvent({ calendarApi, calendarId, existingEvents, event });
   }
 }
 
@@ -23,7 +20,7 @@ async function fetchExistingGoogleEvents({ calendarApi, calendarId }) {
   return response.data.items;
 }
 
-async function addGoogleEvent({ calendarApi, calendarId, existingEvents, event }) {
+async function addOrUpdateGoogleEvent({ calendarApi, calendarId, existingEvents, event }) {
   const existingEvent = existingEvents.find(e => new Date(e.start.dateTime).getUTCDate() === new Date(event.start.dateTime).getUTCDate());
   if (existingEvent && existingEvent.summary === event.summary) {
     console.log('Skipping because event already exists', event);
