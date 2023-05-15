@@ -37,7 +37,7 @@ async function handleLocation({ calendarApi, config }) {
   } else {
     throw new Error(`No events found for ${config.name}`);
   }
-  if (process.env.NODE_ENV === 'production' || await confirmAction(`Do the above scraped events look correct for ${config.name}?`)) {
+  if (!process.env.LOCAL || await confirmAction(`Do the above scraped events look correct for ${config.name}?`)) {
     try {
       await addEventsToGoogleCalendar({
         googleEvents,
