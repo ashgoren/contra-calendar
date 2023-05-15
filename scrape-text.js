@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { extractTextBetween } from './utils.js';
 import { parse, isBefore, isAfter, subDays, addMonths, addYears } from 'date-fns';
+import { zonedTimeToUtc } from 'date-fns-tz';
+import { extractTextBetween } from './utils.js';
 import { MONTHS_TO_SCRAPE } from './config.js';
 const today = new Date();
 
@@ -39,11 +40,11 @@ function setDateTime({ date, startTime, endTime }) {
 
   let startDate = new Date(eventDate);
   startDate.setHours(...startTime.split(':'));
-  const startDateTime = startDate.toISOString(); 
+  const startDateTime = zonedTimeToUtc(startDate, 'America/Los_Angeles').toISOString();
        
   let endDate = new Date(eventDate);
   endDate.setHours(...endTime.split(':'));
-  const endDateTime = endDate.toISOString();
+  const endDateTime = zonedTimeToUtc(endDate, 'America/Los_Angeles').toISOString();
 
   return { startDateTime, endDateTime };
 }

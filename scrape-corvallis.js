@@ -1,6 +1,7 @@
 import axios from 'axios';
 import xml2js from 'xml2js';
 import { isBefore, isAfter, subDays, addMonths } from 'date-fns';
+import { zonedTimeToUtc } from 'date-fns-tz';
 import { MONTHS_TO_SCRAPE } from './config.js';
 const today = new Date();
 
@@ -14,8 +15,8 @@ export async function scrapeCorvallis({ url }) {
   });
   return futureEvents.map(({ summary, dtstart, dtend, location, description, url }) => ({
     summary: summary.text,
-    startDateTime: new Date(dtstart['date-time']).toISOString(),
-    endDateTime: new Date(dtend['date-time']).toISOString(),
+    startDateTime: zonedTimeToUtc(new Date(dtstart['date-time']), 'America/Los_Angeles').toISOString(),
+    endDateTime: zonedTimeToUtc(new Date(dtend['date-time']), 'America/Los_Angeles').toISOString(),
     location: location.text,
     description: description.text,
     url: url.uri

@@ -26,7 +26,7 @@ export async function confirmAction(message) {
 export function logEvents({ events, name }) {
   console.log(`\n****************************\n${name.toUpperCase()}\n****************************\n`);
   for (const {start, end, summary, location, description} of events) {
-    logDateTimes(start.dateTime, end.dateTime)
+    console.log(formatDateTimes(start.dateTime, end.dateTime));
     console.log(summary);
     console.log('LOCATION:', location);
     console.log('DESCRIPTION:', description);
@@ -34,8 +34,8 @@ export function logEvents({ events, name }) {
   }
 }
 
-function logDateTimes(start, end) {
-  const optionsShort = { hour: 'numeric', minute: '2-digit', hour12: true };
+export function formatDateTimes(start, end) {
+  const optionsShort = { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'America/Los_Angeles' };
   const optionsFull = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric', ...optionsShort };
   const startDate = new Date(start);
   const endDate = new Date(end);
@@ -43,7 +43,7 @@ function logDateTimes(start, end) {
   if (startDate.getDate() === endDate.getDate() && startDate.getMonth() === endDate.getMonth() && startDate.getFullYear() === endDate.getFullYear()) {
     const formattedStart = startDate.toLocaleString('en-US', optionsFull).replaceAll(',', '').replaceAll(' at ', ' ');
     const formattedEnd = endDate.toLocaleString('en-US', optionsShort).replaceAll(',', '').replaceAll(' at ', ' ');
-    console.log(`${formattedStart} - ${formattedEnd}`);
+    return `${formattedStart} - ${formattedEnd}`;
   } else {
     throw new Error('Event end time is on a different day than start time.');
   }
