@@ -14,7 +14,7 @@ export async function addEventsToGoogleCalendar({ googleEvents, calendarApi, cal
 async function fetchExistingGoogleEvents({ calendarApi, calendarId }) {
   const response = await calendarApi.events.list({
     calendarId,
-    timeMin: subDays(today, 1).toISOString(),
+    timeMin: subDays(today, 2).toISOString(),
     singleEvents: true,
     orderBy: 'startTime',
   });
