@@ -28,7 +28,14 @@ export async function scrapePortland({}) {
     return isAfter(date, subDays(today, 2)) && isBefore(date, addMonths(today, MONTHS_TO_SCRAPE));
   });
   return futureEvents.map(({ name, startDate, endDate, location, description, url }) => ({
-    summary: name,
+    summary: name
+      .replace('PCDC 2nd Saturday Contra:','PCDC')
+      .replace('PCDC 4th Saturday Contra:','PCDC')
+      .replace('PCDC 5th Saturday','PCDC')
+      .replace('1st Saturday Contra: ','')
+      .replace('First Saturday Contra: ','')
+      .replace('3rd Saturday Contra: ','')
+      .replace('Third Saturday Contra: ',''),
     startDateTime: startDate,
     endDateTime: endDate,
     location: location.name,

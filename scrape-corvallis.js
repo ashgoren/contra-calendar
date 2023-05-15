@@ -14,7 +14,7 @@ export async function scrapeCorvallis({ url }) {
     return isAfter(date, subDays(today, 2)) && isBefore(date, addMonths(today, MONTHS_TO_SCRAPE));
   });
   return futureEvents.map(({ summary, dtstart, dtend, location, description, url }) => ({
-    summary: summary.text,
+    summary: summary.text.replace('Contra Dance – ', ''),
     startDateTime: zonedTimeToUtc(new Date(dtstart['date-time']), 'America/Los_Angeles').toISOString(),
     endDateTime: zonedTimeToUtc(new Date(dtend['date-time']), 'America/Los_Angeles').toISOString(),
     location: location.text,
