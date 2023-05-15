@@ -4,7 +4,7 @@ const today = new Date();
 
 export async function addEventsToGoogleCalendar({ googleEvents, calendarApi, calendarId }) {
   const existingEvents = await fetchExistingGoogleEvents({ calendarApi, calendarId });
-  if (!existingEvents.length) throw new Error(`No existing events found in ${calendarId}. Did something go wrong?`);
+  // if (!existingEvents.length) throw new Error(`No existing events found in ${calendarId}. Did something go wrong?`);
   for (const event of googleEvents) {
     await new Promise(resolve => setTimeout(resolve, 1000)); // rate limiting
     await addOrUpdateGoogleEvent({ calendarApi, calendarId, existingEvents, event });

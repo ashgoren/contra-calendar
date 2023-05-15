@@ -1,4 +1,4 @@
-name: Scrape and Update
+name: Update Contra Google Calendars
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  scrape:
+  scrape_and_update:
     runs-on: ubuntu-latest
 
     steps:

@@ -19,7 +19,7 @@ async function runApplication() {
 
 async function handleLocation({ calendarApi, config }) {
   // scrape events
-  console.log(`\n\nScraping ${config.name}...\n\n`)
+  console.log(`****************************\nScraping ${config.name}...`)
   let scrapedEvents;
   try {
     scrapedEvents = await config.scrapeFunction(config);
