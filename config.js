@@ -13,7 +13,7 @@ export const LOCATIONS = {
     "calendarId": "c_209dd20b8bb61cfd0f6d802f39dba35dca0e6ffc6ce277ebe252df3e10eb9c91@group.calendar.google.com",
     "startTime": "19:30",
     "endTime": "22:00",
-    "startText": "Contra Dances:",
+    "startText": "Schedule of UPCOMING musicians and callers:",
     "endText": "For information about",
     "regex": /^(\w+\s+\d+)\s*[-–]\s*(.*)$/gm,
     "scrapeFunction": scrapeText
