@@ -44,13 +44,13 @@ export const LOCATIONS = {
     "regex": /(\w+\s+\d+(?:st|nd|rd|th),\s+\d{4}):(.*)/g,
     "scrapeFunction": scrapeText
   },
-  "corvallis": {
-    "name": "Corvallis",
-    "shortName": "COR",
-    "url": "http://corvallisfolklore.org/home/?plugin=all-in-one-event-calendar&controller=ai1ec_exporter_controller&action=export_events&ai1ec_cat_ids=8&xml=true",
-    "calendarId": "c_d97061699c63fc077cb7c3588fc89e7362363112a9017cb7be0192f6236170e9@group.calendar.google.com",
-    "scrapeFunction": scrapeCorvallis
-  },
+  // "corvallis": {
+  //   "name": "Corvallis",
+  //   "shortName": "COR",
+  //   "url": "http://corvallisfolklore.org/home/?plugin=all-in-one-event-calendar&controller=ai1ec_exporter_controller&action=export_events&ai1ec_cat_ids=8&xml=true",
+  //   "calendarId": "c_d97061699c63fc077cb7c3588fc89e7362363112a9017cb7be0192f6236170e9@group.calendar.google.com",
+  //   "scrapeFunction": scrapeCorvallis
+  // },
   "portland": {
     "name": "Portland",
     "shortName": "PDX",
