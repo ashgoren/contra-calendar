@@ -25,6 +25,7 @@ async function addOrUpdateGoogleEvent({ calendarApi, calendarId, existingEvents,
   const existingEvent = existingEvents.find(e => new Date(e.start.dateTime).getUTCDate() === new Date(event.start.dateTime).getUTCDate());
   if (existingEvent && existingEvent.summary === event.summary) {
     console.log('Skipping because event already exists', formatDateTimes(event.start.dateTime, event.end.dateTime));
+    console.log(event);
     return;
   } else if (existingEvent) {
     await calendarApi.events.update({
@@ -33,11 +34,13 @@ async function addOrUpdateGoogleEvent({ calendarApi, calendarId, existingEvents,
       resource: event,
     });
     console.log(`Event updated: ${existingEvent.htmlLink}`);
+    console.log(event);
   } else {
     const response = await calendarApi.events.insert({
       calendarId,
       resource: event,
     });
     console.log(`Event created: ${response.data.htmlLink}`);
+    console.log(event);
   }
 }

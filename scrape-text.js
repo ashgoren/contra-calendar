@@ -9,19 +9,21 @@ const today = new Date();
 export async function scrapeText({ url, startText, endText, regex, startTime, endTime}) {
   const { data } = await axios.get(url);
   const content = extractTextBetween({ data, startText, endText });
-
+  const lines = content.split(/\n\s*\n+/);
   let scrapedEvents = [];
-  let match;
-  while ((match = regex.exec(content)) !== null) {
-    const [_, date, summary] = match;
-    const { startDateTime, endDateTime } = setDateTime({ date, startTime, endTime });
-    const eventDate = new Date(startDateTime);
-    if (isAfter(eventDate, subDays(today, 2)) && isBefore(eventDate, addMonths(today, MONTHS_TO_SCRAPE))) {
-      scrapedEvents.push({
-        startDateTime,
-        endDateTime,
-        summary: summary.trim()
-      });
+  for (const line of lines) {
+    const match = regex.exec(line);
+    if (match) {
+      const [_, date, summary] = match;
+      const { startDateTime, endDateTime } = setDateTime({ date, startTime, endTime });
+      const eventDate = new Date(startDateTime);
+      if (isAfter(eventDate, subDays(today, 2)) && isBefore(eventDate, addMonths(today, MONTHS_TO_SCRAPE))) {
+        scrapedEvents.push({
+          startDateTime,
+          endDateTime,
+          summary: summary.trim()
+        });
+      }
     }
   }
   return scrapedEvents;
@@ -29,6 +31,7 @@ export async function scrapeText({ url, startText, endText, regex, startTime, en
 
 function setDateTime({ date, startTime, endTime }) {
   let eventDate;
+  date = date.replace(/\bSept\b/g, 'Sep');
   if (date.includes(',')) {
     eventDate = parse(date, 'MMMM do, yyyy', today);
   } else {
