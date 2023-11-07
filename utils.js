@@ -44,6 +44,10 @@ export function formatDateTimes(start, end) {
     const formattedStart = startDate.toLocaleString('en-US', optionsFull).replaceAll(',', '').replaceAll(' at ', ' ');
     const formattedEnd = endDate.toLocaleString('en-US', optionsShort).replaceAll(',', '').replaceAll(' at ', ' ');
     return `${formattedStart} - ${formattedEnd}`;
+  } else if (endDate.getDate() === startDate.getDate() + 1 || endDate.getDate() === startDate.getDate() + 2) {
+    const formattedStart = startDate.toLocaleString('en-US', optionsFull).replaceAll(',', '').replaceAll(' at ', ' ');
+    const formattedEnd = endDate.toLocaleString('en-US', optionsShort).replaceAll(',', '').replaceAll(' at ', ' ');
+    return `${formattedStart} - ${formattedEnd}`;
   } else {
     throw new Error('Event end time is on a different day than start time.');
   }
