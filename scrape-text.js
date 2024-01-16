@@ -12,11 +12,14 @@ export async function scrapeText({ url, startText, endText, regex, startTime, en
   const lines = content.split(/\n\s*\n+/);
   let scrapedEvents = [];
   for (const line of lines) {
+    // console.log(line);
     const match = regex.exec(line);
     if (match) {
       const [_, date, summary] = match;
       const { startDateTime, endDateTime } = setDateTime({ date, startTime, endTime });
       const eventDate = new Date(startDateTime);
+      // console.log('eventDate', eventDate);
+      // console.log('summary', summary);
       if (isAfter(eventDate, subDays(today, 2)) && isBefore(eventDate, addMonths(today, MONTHS_TO_SCRAPE))) {
         scrapedEvents.push({
           startDateTime,

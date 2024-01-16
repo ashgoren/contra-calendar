@@ -4,8 +4,9 @@ import { scrapeCorvallis } from './scrape-corvallis.js';
 
 export const MONTHS_TO_SCRAPE = 6;
 
-export const LOCATIONS = {
-  "lake_city": {
+export const LOCATIONS = [
+  {
+    "short_name": "lake_city",
     "name": "Lake City",
     "shortName": "SEA",
     "url": "https://seattledance.org/contra/lakecity/",
@@ -18,7 +19,8 @@ export const LOCATIONS = {
     "regex": /^(\w+\s+\d+)\s*[-–]\s*(.*)$/,
     "scrapeFunction": scrapeText
   },
-  "phinney": {
+  {
+    "short_name": "phinney",
     "name": "Phinney",
     "shortName": "SEA",
     "url": "https://seattledance.org/contra/emeraldcity/",
@@ -31,7 +33,8 @@ export const LOCATIONS = {
     "regex": /^(\w+\s+\d+)\s*(.*?)(?=\n\w+\s+\d+|\n*$)/,
     "scrapeFunction": scrapeText
   },
-  "olympia": {
+  {
+    "short_name": "olympia",
     "name": "Olympia",
     "shortName": "OLY",
     "url": "https://oly-wa.us/southbaygrange/contra.php",
@@ -44,17 +47,19 @@ export const LOCATIONS = {
     "regex": /(\S+\s+\d+(?:st|nd|rd|th)?,\s+\d{4}):(.*)/,
     "scrapeFunction": scrapeText
   },
-  "corvallis": {
+  {
+    "short_name": "corvallis",
     "name": "Corvallis",
     "shortName": "COR",
     "url": "http://corvallisfolklore.org/home/?plugin=all-in-one-event-calendar&controller=ai1ec_exporter_controller&action=export_events&ai1ec_cat_ids=8&xml=true",
     "calendarId": "c_d97061699c63fc077cb7c3588fc89e7362363112a9017cb7be0192f6236170e9@group.calendar.google.com",
     "scrapeFunction": scrapeCorvallis
   },
-  "portland": {
+  {
+    "short_name": "portland",
     "name": "Portland",
     "shortName": "PDX",
     "calendarId": "c_0ea1d2488b046c7557c69739657bdef549f31c1d156e64275a28f7eccf82b434@group.calendar.google.com",
     "scrapeFunction": scrapePortland
   }
-}
+]
