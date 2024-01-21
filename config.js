@@ -16,7 +16,7 @@ export const LOCATIONS = [
     "endTime": "22:00",
     "startText": "Schedule of UPCOMING musicians and callers:",
     "endText": "For information about",
-    "regex": /^(\w+\s+\d+)\s*[-–]\s*(.*)$/,
+    "regex": /^(\w+\s+\d+(?:,\s+\d{4})?)\s*[-–]\s*(.*)$/,
     "scrapeFunction": scrapeText
   },
   {
