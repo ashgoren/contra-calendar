@@ -9,7 +9,7 @@ const today = new Date();
 export async function scrapeText({ url, startText, endText, regex, startTime, endTime}) {
   const { data } = await axios.get(url);
   const content = extractTextBetween({ data, startText, endText });
-  const lines = content.split(/\n\s*\n+/);
+  const lines = content.split(/\n+/);
   let scrapedEvents = [];
   for (const line of lines) {
     // console.log(line);
