@@ -29,7 +29,7 @@ export const LOCATIONS = [
     "startTime": "19:30",
     "endTime": "22:00",
     "startText": "for dance roles.",
-    "endText": "COVID cases from previous dances",
+    "endText": "EOF",
     "regex": /^(\w+\s+\d+)\s*(.*?)(?=\n\w+\s+\d+|\n*$)/,
     "scrapeFunction": scrapeText
   },

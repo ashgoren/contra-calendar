@@ -4,8 +4,8 @@ import inquirer from 'inquirer';
 export function extractTextBetween({ data, startText, endText }) {  
   const bodyText = new JSDOM(data).window.document.body.textContent;
   const startIndex = bodyText.indexOf(startText) + startText.length;
-  const endIndex = bodyText.indexOf(endText);
-  if (startIndex >= startText.length && endIndex > startIndex) {
+  let endIndex = endText === 'EOF' ? bodyText.length : bodyText.indexOf(endText);
+  if (startIndex >= startText.length && (endIndex > startIndex || endText === 'EOF')) {
     return bodyText.slice(startIndex, endIndex).trim();
   }
   throw new Error('Could not find the specified start and end text.');
