@@ -26,6 +26,9 @@ async function addOrUpdateGoogleEvent({ calendarApi, calendarId, existingEvents,
   if (existingEvent && existingEvent.summary === event.summary) {
     console.log('Skipping because event already exists');
     console.log(new Date(existingEvent.start.dateTime).toLocaleDateString(), existingEvent.summary);
+  } else if (existingEvent && existingEvent.summary.includes('Special afternoon dance')) {
+    console.log('Skipping because event is special afternoon dance');
+    console.log(new Date(existingEvent.start.dateTime).toLocaleDateString(), existingEvent.summary);
   } else if (existingEvent) {
     console.log('*** UPDATING EVENT ***');
     console.log('FROM:');
