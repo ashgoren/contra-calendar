@@ -36,7 +36,8 @@ async function handleLocation({ calendarApi, config }) {
   if (googleEvents.length > 0) {
     logEvents({ events: googleEvents, name: config.name });
   } else {
-    throw new Error(`No events found for ${config.name}`);
+    console.warn(`No events found for ${config.name}`);
+    // throw new Error(`No events found for ${config.name}`);
   }
   if (!process.env.LOCAL || await confirmAction(`Do the above scraped events look correct for ${config.name}?`)) {
     try {
