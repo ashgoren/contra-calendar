@@ -26,11 +26,9 @@ async function fetchExistingGoogleEvents({ calendarApi, calendarId }) {
 
 async function addOrUpdateGoogleEvent({ calendarApi, calendarId, existingEvents, event }) {
   const existingEvent = existingEvents.find(e => new Date(e.start.dateTime).toLocaleDateString() === new Date(event.start.dateTime).toLocaleDateString());
-  // const eventDate = new Date(event.start.dateTime).toLocaleDateString();
-  const eventDate = new Date(event.start.dateTime);
-  if (eventDate > new Date('2025-03-06') && eventDate < new Date('2025-03-11')) {
-    console.log('Skipping because Casdade Promenade dates/times are glitchy');
-  } else if (existingEvent && existingEvent.summary === event.summary) {
+  const existingEventStart = new Date(existingEvent.start.dateTime).toLocaleString();
+  const newEventStart = new Date(event.start.dateTime).toLocaleString();
+  if (existingEvent && existingEvent.summary === event.summary && existingEventStart === newEventStart) {
     console.log('Skipping because event already exists');
     console.log(new Date(existingEvent.start.dateTime).toLocaleDateString(), existingEvent.summary);
   } else if (existingEvent) {
