@@ -1,5 +1,4 @@
 import { subDays } from 'date-fns';
-import { formatDateTimes } from './utils.js';
 const today = new Date();
 
 export async function addEventsToGoogleCalendar({ googleEvents, calendarApi, calendarId }) {
@@ -26,9 +25,7 @@ async function fetchExistingGoogleEvents({ calendarApi, calendarId }) {
 
 async function addOrUpdateGoogleEvent({ calendarApi, calendarId, existingEvents, event }) {
   const existingEvent = existingEvents.find(e => new Date(e.start.dateTime).toLocaleDateString() === new Date(event.start.dateTime).toLocaleDateString());
-  const existingEventStart = new Date(existingEvent.start.dateTime).toLocaleString();
-  const newEventStart = new Date(event.start.dateTime).toLocaleString();
-  if (existingEvent && existingEvent.summary === event.summary && existingEventStart === newEventStart) {
+  if (existingEvent && existingEvent.summary === event.summary && getEventStart(existingEvent) === getEventStart(event)) {
     console.log('Skipping because event already exists');
     console.log(new Date(existingEvent.start.dateTime).toLocaleDateString(), existingEvent.summary);
   } else if (existingEvent) {
@@ -51,4 +48,8 @@ async function addOrUpdateGoogleEvent({ calendarApi, calendarId, existingEvents,
   }
   console.log(new Date(event.start.dateTime).toLocaleDateString(), event.summary);
   console.log('');
+}
+
+function getEventStart(event) {
+  return new Date(event.start.dateTime).toLocaleString();
 }
