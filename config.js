@@ -1,5 +1,6 @@
 import { scrapeText } from './scrape-text.js';
 import { scrapePortland } from './scrape-portland.js';
+import { scrapePortlandECD } from './scrape-portland-ecd.js';
 import { scrapeCorvallis } from './scrape-corvallis.js';
 
 export const MONTHS_TO_SCRAPE = 6;
@@ -61,5 +62,12 @@ export const LOCATIONS = [
     "shortName": "PDX",
     "calendarId": "c_0ea1d2488b046c7557c69739657bdef549f31c1d156e64275a28f7eccf82b434@group.calendar.google.com",
     "scrapeFunction": scrapePortland
+  },
+  {
+    "short_name": "ecd",
+    "name": "Portland ECD",
+    "shortName": "ECD",
+    "calendarId": "c_ada0949aec738e310e18d339ff565b07714cecce89336ff4ecc7438c5ee97d84%40group.calendar.google.com",
+    "scrapeFunction": scrapePortlandECD
   }
 ]
