@@ -67,7 +67,7 @@ export const LOCATIONS = [
     "short_name": "ecd",
     "name": "Portland ECD",
     "shortName": "ECD",
-    "calendarId": "c_ada0949aec738e310e18d339ff565b07714cecce89336ff4ecc7438c5ee97d84%40group.calendar.google.com",
+    "calendarId": "c_ada0949aec738e310e18d339ff565b07714cecce89336ff4ecc7438c5ee97d84@group.calendar.google.com",
     "scrapeFunction": scrapePortlandECD
   }
 ]

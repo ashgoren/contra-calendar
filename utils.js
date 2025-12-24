@@ -29,7 +29,7 @@ export function logEvents({ events, name }) {
     try {
       console.log(formatDateTimes(start.dateTime, end.dateTime));
     } catch (error) {
-      console.error('Error formatting date times:', error);
+      console.warn(`Error formatting date times for ${summary}:`, error);
     }
     console.log(summary);
     console.log('LOCATION:', location);
@@ -53,6 +53,7 @@ export function formatDateTimes(start, end) {
     const formattedEnd = endDate.toLocaleString('en-US', optionsShort).replaceAll(',', '').replaceAll(' at ', ' ');
     return `${formattedStart} - ${formattedEnd}`;
   } else {
-    throw new Error('Event end time is on a different day than start time.');
+    // throw new Error('Event end time is on a different day than start time.');
+    console.warn('Warning: Event end time is on a different day than start time.');
   }
 }
