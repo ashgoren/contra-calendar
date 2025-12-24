@@ -26,7 +26,11 @@ export async function confirmAction(message) {
 export function logEvents({ events, name }) {
   console.log(`${name.toUpperCase()}\n****************************\n`);
   for (const {start, end, summary, location, description} of events) {
-    console.log(formatDateTimes(start.dateTime, end.dateTime));
+    try {
+      console.log(formatDateTimes(start.dateTime, end.dateTime));
+    } catch (error) {
+      console.error('Error formatting date times:', error);
+    }
     console.log(summary);
     console.log('LOCATION:', location);
     console.log('DESCRIPTION:', description);
