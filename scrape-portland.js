@@ -10,7 +10,7 @@ export async function scrapePortland({}) {
     const month = addMonths(today, i).getMonth() + 1;
     const year = addMonths(today, i).getFullYear();
     const url = `https://portlandcountrydance.org/calendar/?format=calendar&mcat=2&time=month&month=${month}&yr=${year}`;
-    const { data } = await axios.get(url);
+    const { data } = await axios.get(url, { timeout: 20000 });
     const { window: { document } } = new JSDOM(data);
     const scriptTags = [...document.querySelectorAll('script[type="application/ld+json"]')];
     const scriptTagWithoutClass = scriptTags.find(({ className }) => !className);
