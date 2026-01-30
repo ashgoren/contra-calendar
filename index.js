@@ -14,7 +14,11 @@ async function runApplication() {
   const locations = process.argv[2] ? LOCATIONS.filter(location => location.short_name === process.argv[2]) : LOCATIONS
   const calendarApi = await setupGoogleCalendarApi();
   for (const config of Object.values(locations)) {
-    await handleLocation({ calendarApi, config });
+    try {
+      await handleLocation({ calendarApi, config });
+    } catch (err) {
+      console.error(`Failed to process location ${config.name}: ${err}`);
+    }
   }
 }
 
