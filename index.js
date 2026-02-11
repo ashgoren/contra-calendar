@@ -18,6 +18,7 @@ async function runApplication() {
       await handleLocation({ calendarApi, config });
     } catch (err) {
       console.error(`Failed to process location ${config.name}: ${err}`);
+      throw err;
     }
   }
 }
